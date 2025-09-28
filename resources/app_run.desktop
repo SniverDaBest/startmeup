@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=StartMeUp Settings
+Name=StartMeUp
 Comment=An application meant for DEs without an option to run specific commands on startup.
 Type=Application
 Icon=me.sniverdabest.startmeup
-Exec=startmeup %F
+Exec=startmeup --run-apps %F
 Terminal=false
 StartupNotify=true
 Categories=COSMIC

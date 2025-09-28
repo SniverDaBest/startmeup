@@ -15,6 +15,12 @@ use std::collections::HashMap;
 const REPOSITORY: &str = env!("CARGO_PKG_REPOSITORY");
 const APP_ICON: &[u8] = include_bytes!("../resources/icons/hicolor/scalable/apps/icon.svg");
 
+#[derive(Debug, Clone)]
+pub struct Command {
+    label: String,
+    enabled: bool,
+}
+
 /// The application model stores app-specific state used to describe its interface and
 /// drive its logic.
 pub struct AppModel {
@@ -28,6 +34,9 @@ pub struct AppModel {
     key_binds: HashMap<menu::KeyBind, MenuAction>,
     // Configuration data that persists between application runs.
     config: Config,
+
+    cmds: Vec<Command>,
+    new_item_text: String,
 }
 
 /// Messages emitted by the application and its widgets.
@@ -38,6 +47,10 @@ pub enum Message {
     ToggleContextPage(ContextPage),
     UpdateConfig(Config),
     LaunchUrl(String),
+
+    ToggleItem(usize),
+    UpdateNewItem(String),
+    AddItem,
 }
 
 /// Create a COSMIC application from the app model
@@ -71,20 +84,15 @@ impl cosmic::Application for AppModel {
         let mut nav = nav_bar::Model::default();
 
         nav.insert()
-            .text(fl!("page-id", num = 1))
+            .text(fl!("cmds"))
             .data::<Page>(Page::Page1)
             .icon(icon::from_name("applications-science-symbolic"))
             .activate();
 
         nav.insert()
-            .text(fl!("page-id", num = 2))
+            .text(fl!("settings"))
             .data::<Page>(Page::Page2)
             .icon(icon::from_name("applications-system-symbolic"));
-
-        nav.insert()
-            .text(fl!("page-id", num = 3))
-            .data::<Page>(Page::Page3)
-            .icon(icon::from_name("applications-games-symbolic"));
 
         // Construct the app model with the runtime's core.
         let mut app = AppModel {
@@ -105,6 +113,9 @@ impl cosmic::Application for AppModel {
                     }
                 })
                 .unwrap_or_default(),
+
+            cmds: Vec::new(),
+            new_item_text: String::new(),
         };
 
         // Create a startup command that sets the window title.
@@ -151,13 +162,18 @@ impl cosmic::Application for AppModel {
     /// Application events will be processed through the view. Any messages emitted by
     /// events received by widgets will be passed to the update method.
     fn view(&self) -> Element<Self::Message> {
-        widget::text::title1(fl!("welcome"))
-            .apply(widget::container)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .align_x(Horizontal::Center)
-            .align_y(Vertical::Center)
-            .into()
+        match self.nav.data::<Page>(self.nav.active()) {
+            Some(Page::Page1) => self.checklist_view(),
+            Some(Page::Page2) => self.settings_view(),
+
+            None => widget::text::title1(fl!("bad-location"))
+                .apply(widget::container)
+                .width(Length::Fill)
+                .height(Length::Fill)
+                .align_x(Horizontal::Center)
+                .align_y(Vertical::Center)
+                .into(),
+        }
     }
 
     /// Register subscriptions for this application.
@@ -226,6 +242,26 @@ impl cosmic::Application for AppModel {
                     eprintln!("failed to open {url:?}: {err}");
                 }
             },
+
+            Message::ToggleItem(idx) => {
+                if let Some(item) = self.cmds.get_mut(idx) {
+                    item.enabled = !item.enabled;
+                }
+            }
+
+            Message::UpdateNewItem(s) => {
+                self.new_item_text = s;
+            }
+
+            Message::AddItem => {
+                if !self.new_item_text.trim().is_empty() {
+                    self.cmds.push(Command {
+                        label: self.new_item_text.trim().to_string(),
+                        enabled: true,
+                    });
+                    self.new_item_text.clear();
+                }
+            }
         }
         Task::none()
     }
@@ -289,13 +325,47 @@ impl AppModel {
             Task::none()
         }
     }
+
+    fn checklist_view(&self) -> Element<Message> {
+        let mut col = widget::column().spacing(10);
+
+        for (i, item) in self.cmds.iter().enumerate() {
+            col = col.push(
+                widget::checkbox(&item.label, item.enabled)
+                    .on_toggle(move |_| Message::ToggleItem(i)),
+            );
+        }
+
+        let input = widget::text_input(
+            "Some command (e.g. echo \"Hello, world!\")",
+            &self.new_item_text,
+        )
+        .on_input(Message::UpdateNewItem)
+        .on_submit(|_| Message::AddItem);
+
+        let button = widget::button::text("Add").on_press(Message::AddItem);
+
+        return col.push(widget::row().push(input).push(button)).into();
+    }
+
+    fn settings_view(&self) -> Element<Message> {
+        let title = widget::text::title1(fl!("settings"))
+            .apply(widget::container)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .align_x(Horizontal::Left)
+            .align_y(Vertical::Top);
+
+        let mut col = widget::column().spacing(10);
+
+        return col.push(widget::row().push(title)).into();
+    }
 }
 
 /// The page to display in the application.
 pub enum Page {
     Page1,
     Page2,
-    Page3,
 }
 
 /// The context page to display in the context drawer.

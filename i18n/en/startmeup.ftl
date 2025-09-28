@@ -1,6 +1,7 @@
-app-title = Startmeup
+app-title = StartMeUp
 about = About
 view = View
-welcome = Welcome to COSMIC! ✨
-page-id = Page { $num }
+settings = Settings
+cmds = Commands
 git-description = Git commit {$hash} on {$date}
+bad-location = Invalid page!

@@ -1,2 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <rect
+       x="44.43348"
+       y="26.389427"
+       width="90.445815"
+       height="109.84317"
+       id="rect2" />
+    <rect
+       x="8.3453744"
+       y="12.405286"
+       width="102.4"
+       height="102.17445"
+       id="rect1" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="7.2407734"
+     inkscape:cx="59.454975"
+     inkscape:cy="65.807887"
+     inkscape:window-width="2516"
+     inkscape:window-height="1354"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <text
+     xml:space="preserve"
+     id="text2"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.6667px;font-family:'JetBrainsMono Nerd Font';-inkscape-font-specification:'JetBrainsMono Nerd Font';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect2);fill:#00ff00;stroke:#000000;stroke-width:1.30103;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(1.4142659,0,0,1.4142659,-11.789542,-40.328603)"><tspan
+       x="44.433594"
+       y="93.419007"
+       id="tspan1">_</tspan></text>
+  <text
+     xml:space="preserve"
+     id="text1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.6667px;font-family:'JetBrainsMono Nerd Font';-inkscape-font-specification:'JetBrainsMono Nerd Font';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect1);fill:#00ff00;stroke:#000000;stroke-width:1.30103;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(1.4142659,0,0,1.4142659,-8.5996549,-9.8009992)"><tspan
+       x="8.3457031"
+       y="79.436585"
+       id="tspan2">❯</tspan></text>
+  <path
+     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1.83963;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+     d="M 83.281205,79.668805 65.514936,47.424199 99.027046,62.663265 v 0 c -11.11493,1.75764 -14.626672,8.58407 -15.745841,17.00554 z"
+     id="path3"
+     sodipodi:nodetypes="ccccc" />
+</svg>

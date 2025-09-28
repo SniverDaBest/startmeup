@@ -1,10 +1,23 @@
 // SPDX-License-Identifier: BSD-2-Clause
+#![allow(mismatched_lifetime_syntaxes)]
 
 mod app;
 mod config;
 mod i18n;
 
+use std::env;
+
 fn main() -> cosmic::iced::Result {
+    for arg in env::args() {
+        match arg.as_str() {
+            "--run-apps" | "-r" => {
+                panic!("we haven't even started saving stuff...");
+            }
+
+            _ => continue,
+        }
+    }
+
     // Get the system's preferred languages.
     let requested_languages = i18n_embed::DesktopLanguageRequester::requested_languages();
 
